@@ -1,0 +1,56 @@
+
+## VHDL
+
+syntax "vhdl" "\.vhd$"
+
+##operators
+
+icolor brightblue "\<(abs|and|mod|nand|nor|not|or|rem|rol|ror|sla|sll|sra|srl|xnor|xor|downto|to|range)\>"
+
+##declarators
+
+icolor cyan "\<(attribute|body|constant|file|function|generic|signal|variable|shared|type|subtype|process|access)\>"
+
+##type names
+
+icolor magenta "\<(array|literal|integer|STD_LOGIC|STD_LOGIC_VECTOR)\>"
+
+##builtinfunctions
+
+icolor brightblue "/<(assert|others)/>"
+
+##structural things
+
+icolor green "\<(architecture|block|in|out|port|inout|map|component|configuration|entity|package|library)\>"
+
+##logical
+
+icolor blue "\<(if|else|elsif|begin|end|for|generate|while|is|loop|of|on|case|then|select|exit|next|use|when|with)\>"
+
+##open
+
+icolor brightmagenta "\<(open)\>"
+##modes
+icolor red "\<(buffer|bus|linkage|transport)\>"
+##time 
+icolor brightgreen "\<(after|postponed|until|wait)\>"
+
+##
+## numbers
+
+icolor brightyellow "\b(([1-9][0-9]+)|0+)\.[0-9]+j?\b" "\b([1-9][0-9]*[Lj]?)\b" "\b0o?[0-7]*L?\b" "\b0x[1-9a-f][0-9a-f]*L?\b" "\b0b[01]+\b"
+
+
+## strings
+color yellow "['][^']*[^\\][']" "[']{3}.*[^\\][']{3}"
+color yellow "["][^"]*[^\\]["]" "["]{3}.*[^\\]["]{3}"
+
+## comments
+color green "^--.*|[[:space:]]--.*$"
+
+
+## trailing spaces
+color ,green "[[:space:]]+$"
+
+## reminders
+color brightwhite,yellow "(FIXME|TODO|XXX)"
