@@ -1,9 +1,10 @@
 # 250 MHz
 create_clock -period 4.000 -name clk -waveform {0.000 2.000} [get_ports clk]
 
+
+#keeps MPS to SLR1 large pblock contains memories, smaller pblocks separate MPs
 create_pblock pblock_MPS
 add_cells_to_pblock [get_pblocks pblock_MPS] [get_cells -quiet [list \
-
           MP_L6PHID \
           {TPROJ_58_loop[*].TPROJ_58}\
           {TPROJ_60_loop[*].TPROJ_60} \    
@@ -49,6 +50,8 @@ add_cells_to_pblock get_pblocks pblock_MPL1L2L3] [get_cells -quiet [list \
           MP_L3PHIB]]
 resize_pblock [get_pblocks pblock_MPL1L2L3] -add {CLOCKREGION_X7Y7:CLOCKREGION_X4Y4}
 
+
+#keeps TPS to SLR2 large pblock contains memories, smaller pblocks separate TPs
 create_pblock pblock_TPs
 add_cells_to_pblock [get_pblocks pblock_TPs] [get_cells -quiet [list \
           {AS_51_loop[*].AS_51} \
@@ -135,6 +138,8 @@ add_cells_to_pblock get_pblocks pblock_TPL3L4] [get_cells -quiet [list \
           TP_L5L6D_lut \
           TP_L5L6D_regionlut]]
 resize_pblock [get_pblocks pblock_TPL3L4] -add {CLOCKREGION_X7Y11:CLOCKREGION_X4Y8}
+
+#TBs on SLR0
 create_pblock pblock_FTs
 add_cells_to_pblock [get_pblocks pblock_FTs] [get_cells -quiet [list \
           {FM_52_loop[*].FM_52} \
@@ -145,6 +150,9 @@ add_cells_to_pblock [get_pblocks pblock_FTs] [get_cells -quiet [list \
           FT_L5L6 \
           {TPAR_70_loop[*].TPAR_70}]]
 resize_pblock [get_pblocks pblock_FTs] -add {CLOCKREGION_X1Y0:CLOCKREGION_X6Y3}
+
+
+#IRs and VMRs on SLR3
 create_pblock pblock_IRsVMRs
 add_cells_to_pblock [get_pblocks pblock_IRsVMRs] [get_cells -quiet [list \
           {IL_36_loop[*].IL_36}\
@@ -214,13 +222,14 @@ add_cells_to_pblock [get_pblocks pblock_IRsVMRs] [get_cells -quiet [list \
           VMR_L6PHID]]
 resize_pblock [get_pblocks pblock_IRsVMRs] -add {CLOCKREGION_X1Y12:CLOCKREGION_X6Y15}
 
+
+#following pblocks reserves some space for emp framework
 create_pblock pblock_1
 resize_pblock [get_pblocks pblock_1] -add {CLOCKREGION_X0Y12:CLOCKREGION_X0Y15}
 set_property EXCLUDE_PLACEMENT 1 [get_pblocks pblock_1]
 create_pblock pblock_2
 resize_pblock [get_pblocks pblock_2] -add {CLOCKREGION_X7Y12:CLOCKREGION_X7Y15}
 set_property EXCLUDE_PLACEMENT 1 [get_pblocks pblock_2]
-
 create_pblock pblock_3
 resize_pblock [get_pblocks pblock_3] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y3}
 set_property EXCLUDE_PLACEMENT 1 [get_pblocks pblock_3]
@@ -228,6 +237,8 @@ create_pblock pblock_4
 resize_pblock [get_pblocks pblock_4] -add {CLOCKREGION_X7Y0:CLOCKREGION_X7Y3}
 set_property EXCLUDE_PLACEMENT 1 [get_pblocks pblock_4]
 
+
+#user_cluster properties attempts to have placer cluster problematic HLS modules, this is seemingly ignored when it matters
 set_property USER_CLUSTER group_TP_L1L2A [get_cells [list TP_L1L2A TP_L1L2A_lut TP_L1L2A_regionlut]]
 set_property USER_CLUSTER group_TP_L1L2B [get_cells [list TP_L1L2B TP_L1L2B_lut TP_L1L2B_regionlut]]
 set_property USER_CLUSTER group_TP_L1L2C [get_cells [list TP_L1L2C TP_L1L2C_lut TP_L1L2C_regionlut]]
@@ -250,7 +261,7 @@ set_property USER_CLUSTER group_TP_L3L4C [get_cells [list TP_L3L4C TP_L3L4C_lut 
 set_property USER_CLUSTER group_TP_L3L4D [get_cells [list TP_L3L4D TP_L3L4D_lut TP_L3L4D_regionlut]]
 set_property USER_CLUSTER group_TP_L5L6A [get_cells [list TP_L5L6A TP_L5L6A_lut TP_L5L6A_regionlut]]
 set_property USER_CLUSTER group_TP_L5L6B [get_cells [list TP_L5L6B TP_L5L6B_lut TP_L5L6B_regionlut]]
-set_property USER_CLUSTER group_TP_L5L6C [get_cells [list TP_L5L6C TP_L5L6C_lut TP_L5L6C_regionlut]]
+Quick Accessset_property USER_CLUSTER group_TP_L5L6C [get_cells [list TP_L5L6C TP_L5L6C_lut TP_L5L6C_regionlut]]
 set_property USER_CLUSTER group_TP_L5L6D [get_cells [list TP_L5L6D TP_L5L6D_lut TP_L5L6D_regionlut]]
 set_property USER_CLUSTER group_MP_L1PHIA [get_cells MP_L1PHIA]
 set_property USER_CLUSTER group_MP_L1PHIB [get_cells MP_L1PHIB]
